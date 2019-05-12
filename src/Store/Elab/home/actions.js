@@ -1,0 +1,3 @@
+export const FETCH_TESTS_START  = "FETCH_TESTS_START"
+export const RECIEVE_TESTS 	    = "RECIEVE_TESTS"
+export const FETCH_TESTS_ERROR  = "FETCH_TESTS_ERROR"

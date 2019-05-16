@@ -12,7 +12,7 @@ const SearchInput = styled.input`
 
 const SearchIcon = styled.i`
     left: auto;
-    right: 330px;
+    right: 25px;
     float: right;
     margin-top: 16px;
     position: absolute;
@@ -26,7 +26,7 @@ const SearchIcon = styled.i`
 export const Search = ({...props})=>{
 
     return(
-        <div className="input-icon input-icon-lg right">
+        <div className="input-icon input-icon-lg right" style={{position : "relative"}}>
             <SearchIcon className="fa fa-search font-green"></SearchIcon>
             <SearchInput  type="text" 
                     className="form-control input-lg" 

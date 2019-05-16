@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Styled from "styled-components";
 import { Search } from "./Components/Search/Search";
+import {TestList} from "./Components/Listing/Listing"
+import { Filter } from "./Components/Filter/Filter"
 
 //import Store
 import Store from "./Store/Elab/home";
@@ -9,7 +11,7 @@ import { dispatchFetchingTests } from "./Store/Elab/home/reducers";
 import { connect, Provider } from "react-redux";
 
 //Layout
-import LayoutContainer, { PageHeader, Main } from "./Layout";
+import LayoutContainer, { PageHeader, Main, device } from "./Layout";
 
 import "./styles.css";
 
@@ -18,6 +20,8 @@ const headerStyle =
 const Logo = Styled.div`
   flex : 1;
   padding : 20px 0 0 150px;
+  font-size: 25px;
+  font-weight: 700;
 `;
 const SearchBox = Styled.div`
   flex : 6;
@@ -29,29 +33,36 @@ const UserNav = Styled.div`
 `;
 
 const Listing = Styled.div`
-  flex : 3;
-`;
-const Filter = Styled.div`
-  flex : 1;
-`;
-const test = () =>
-  Store.dispatch(dispatch => {
-    dispatch({ type: "FETCH_TESTS_START" });
-  });
+  
+  @media ${device.laptop} {
+    flex : 3;
+  }
 
-function App({ dispatchFetchingTests }) {
+  @media ${device.mobileS} {
+    flex : 3 100%;
+  }
+
+`;
+
+
+function App(props) {
+  if(!props.getAllTests.fetched) props.dispatchFetchingTests();
+  const {tests} = props.getAllTests;
   return (
     <LayoutContainer>
       <PageHeader pHeader={{ customStyle: headerStyle }} fixed>
-        <Logo onClick={e => dispatchFetchingTests()}>Logo</Logo>
+        <Logo>i<span style={{color : 'red'}}>TT</span>yni</Logo>
         <SearchBox>
           <Search />
         </SearchBox>
         <UserNav>User</UserNav>
       </PageHeader>
       <Main>
-        <Listing>List</Listing>
-        <Filter>Filter</Filter>
+        <Listing>
+          <h3>list of tests</h3>
+          <TestList items={tests} />
+        </Listing>
+        <Filter/>
       </Main>
     </LayoutContainer>
   );

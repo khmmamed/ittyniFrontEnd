@@ -1,4 +1,3 @@
-import React from "react";
 import axios from "axios";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
@@ -9,14 +8,14 @@ import { applyMiddleware, combineReducers } from "redux";
 const getAllTests = (
   state = {
     fetching: "",
-    fetched: true,
+    fetched: false,
     tests: []
   },
   action
 ) => {
   switch (action.type) {
     case "FETCH_TESTS_START":
-      return { ...state, fetching: "fa fa-spinner fa-spin" };
+      return { ...state, fetching: "fa fa-spinner fa-spin", fetched : true };
     case "RECIEVE_TESTS":
       return {
         ...state,
@@ -25,7 +24,7 @@ const getAllTests = (
         tests: action.payload
       };
     case "FETCH_TESTS_ERROR":
-      return { ...state, fetching: "", error: action.payload.message };
+      return { ...state, fetching: "", error: action.payload.message, fetched : true };
     default:
       return { ...state };
   }
@@ -35,7 +34,7 @@ const getAllTests = (
 export const dispatchFetchingTests = () => dispatch => {
   dispatch({ type: "FETCH_TESTS_START" });
   axios
-    .get("http://207.246.80.123:8000/tests")
+    .get("http://localhost:8000/tests/fr")
     .then(respond => {
       dispatch({ type: "RECIEVE_TESTS", payload: respond.data });
     })

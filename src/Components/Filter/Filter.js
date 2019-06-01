@@ -11,10 +11,17 @@ const StyledFilter = Styled.div`
   flex : 1 50%;
   order : 1;
   padding : 50px 0 0 30px;
+  display : block;
 
   @media ${device.laptop} {
     flex : 1 100%;
     order : -1;
+    
+    display: none;
+  }
+
+  @meida ${device.mobileM} {
+    
   }
 
 `;

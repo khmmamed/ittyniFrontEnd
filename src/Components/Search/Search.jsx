@@ -23,7 +23,14 @@ const SearchIcon = styled.i`
     text-align: center;
 `;
 
-export const Search = ({...props})=>{
+export const Search = (props)=>{
+    
+    let name ;
+    const handleInputChange= (e) =>{
+        props.onClick(e.target.value);
+    }
+
+    
 
     return(
         <div className="input-icon input-icon-lg right" style={{position : "relative"}}>
@@ -31,6 +38,8 @@ export const Search = ({...props})=>{
             <SearchInput  type="text" 
                     className="form-control input-lg" 
                     placeholder="Find Medical Procedure"
+                    onChange = {handleInputChange}
+                    value={name}
             />
         </div> 
     )

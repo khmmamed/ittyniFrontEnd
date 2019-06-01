@@ -1,6 +1,7 @@
 import React from "react"
 import styled from 'styled-components'
 
+import {CheckBox} from "../form/checkbox";
 
 const StyledList = styled.ul`
     padding : 0;
@@ -21,23 +22,79 @@ const MnemonicTitle = styled.div`
     left: ${props=>(props.lent<=3) ? "25px;" : "10px;"};
     font-size: small;
     font-weight: 700;
+    flex: 1;
+`
+const TestTitle = styled.div`
+    flex : 4;
+`
+const TestPrice = styled.div`
+    padding-left: 25px;
+    flex: 1;
+    text-align: right;
+`
+const Mnemonic = styled.div`
+    
 `
 
-export const TestList = ({items}) =>(
+const MnemonicIcon = styled.svg`
+
+    & > circle {
+        fill : ${props => (props.checked ? "salmon" : "papayawhip")};
+        
+        &:focus {
+            stroke: 0 0 0 3px pink;
+        }
+    }
+    
+`
+
+export const TestList = ({items, checked, testchecked, panel, uncheckedTest}) =>{
+    
+    const isChecked= (testTitle)=>{
+        for( var i = 0; i < panel.length; i++){ 
+            if ( panel[i].testTitle === testTitle) {
+              return true;
+            }
+          }
+        return false;
+    }
+    const handleCheckboxEvents=(e) => {
+        const name = e.target.getAttribute('name');
+        const value = e.target.getAttribute('price');
+        return checkIfExist(name) ?  uncheckedTest(name) : testchecked(name , value);
+    }
+    const checkIfExist=(name)=>{
+        let ifExist = false;
+        for( var i = 0; i < panel.length; i++){ 
+            if ( panel[i].testTitle === name) {
+                ifExist = true; break;
+            }
+          }
+        return ifExist;
+    }
+    return(
     <StyledList>
         {items.map(test=>
-            <Li key={test.nameFr}>
-                <div className="mnemonic" style={{position : "relative"}}>
-                    <svg width="90" height="90">
-                        <circle cx="40" cy="45" r="35" stroke="#888888" strokeWidth="2" fill="none"></circle>
-                    </svg>
+
+            <Li key={test.nameFr}   >
+
+                <Mnemonic className="mnemonic" style={{position : "relative"}}>
+                    
+                    <MnemonicIcon width="90" height="90" checked={isChecked(test.nameFr)}>
+                        <circle cx="40" cy="45" r="35" stroke="#888888" strokeWidth="2" 
+                                name={test.nameFr} 
+                                price={test.bcode}
+                                onClick={handleCheckboxEvents}></circle>
+                    </MnemonicIcon>
                     <MnemonicTitle lent={test.mnemonic.length}>{test.mnemonic}</MnemonicTitle>
-                </div>
-                <div className="title">{test.nameFr}</div>
-                <div style={{paddingLeft : "25px"}}>
-                    <span class="badge badge-info">{Math.floor(test.bcode * 1.34)} MAD</span>
-                </div>
+                </Mnemonic>
+
+                <TestTitle>{test.nameFr}</TestTitle>
+
+                <TestPrice>
+                    <span className="badge badge-info">{Math.floor(test.bcode * 1.34)} MAD</span>
+                </TestPrice>
             </Li>)
         }
     </StyledList>
-)
+)}
